@@ -39,3 +39,8 @@ def create_X_and_y(width, height, train):
         else:
             y.append(0)
     return X, y, m, n
+
+def initialize_parameters(input, output):
+    w = np.random.randn(input, output) * 0.01
+    b = np.zeros((input, 1))
+    return w, b
