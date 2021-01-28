@@ -16,10 +16,10 @@ def model():
     costs = []
     for i in range(num_iterations):
         A = fp.forward_propagation(w, b, X)
+        cost = hp.calculate_cost(m, A, Y)
+        print(cost)
+        costs.append(cost)
         
-        #gradients, cost = forward_propagation(w, b, X, Y)
-    #Simple logistic regression network.
-    # X = (num_px * num_px * 3, number_of_examples)
 
 if __name__ == "__main__":
     model()

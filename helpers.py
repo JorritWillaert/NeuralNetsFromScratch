@@ -48,3 +48,7 @@ def initialize_parameters(input, output):
     w = np.random.randn(input, output) * 0.01
     b = np.zeros((input, 1))
     return w, b
+
+def calculate_cost(m, A, Y):
+    cost = -1 / m * (np.sum(Y * np.log(A) + (1 - Y) * np.log(1 - A)))
+    return cost
