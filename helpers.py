@@ -52,3 +52,8 @@ def initialize_parameters(input, output):
 def calculate_cost(m, A, Y):
     cost = -1 / m * (np.sum(Y * np.log(A) + (1 - Y) * np.log(1 - A)))
     return cost
+
+def update_parameters(w, b, dw, db, learning_rate):
+    dw = w - learning_rate * dw
+    db = b - learning_rate * db
+    return dw, db
