@@ -23,22 +23,26 @@ def create_X_and_y(width, height, train):
     else:
         suffix = "test1"
     dir_list = sorted(os.listdir('DataSetCatsDogs/' + suffix + '/preprocessed_' + suffix), key=len)
-    X = []
-    y = []
+    X = np.zeros((width * height * 3, 2000))
+    Y = np.zeros((1, 2000))
     m = len(dir_list)
     n = width * height * 3
     for img_num in range(len(dir_list)):
+        num = img_num
         if (img_num % 12500 > 999): #Only use small set now
             continue
+        if img_num >= 12500:
+            num = img_num - 12500
         img_name = dir_list[img_num]
         img = cv2.imread('DataSetCatsDogs/' + suffix + '/preprocessed_' + suffix + '/' + img_name)
         img = img.flatten() / 255
-        X.append(img)
+        #img = np.expand_dims(img, axis = 1)
+        X[:, num] = img
         if img_name[0:3] == "cat":
-            y.append(1)
+            Y[0, num] = 1
         else:
-            y.append(0)
-    return X, y, m, n
+            Y[0, num] = 0
+    return X, Y, m, n
 
 def initialize_parameters(input, output):
     w = np.random.randn(input, output) * 0.01
