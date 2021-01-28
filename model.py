@@ -19,7 +19,7 @@ def model():
         cost = hp.calculate_cost(m, A, Y)
         print(cost)
         costs.append(cost)
-        
+
 
 if __name__ == "__main__":
     model()

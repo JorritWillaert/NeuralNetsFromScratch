@@ -46,7 +46,7 @@ def create_X_and_y(width, height, train):
 
 def initialize_parameters(input, output):
     w = np.random.randn(input, output) * 0.01
-    b = np.zeros((input, 1))
+    b = np.zeros((1, output))
     return w, b
 
 def calculate_cost(m, A, Y):
