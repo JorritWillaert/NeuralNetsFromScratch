@@ -12,8 +12,9 @@ def model():
     height = 250
     num_iterations = 100
     learning_rate = 0.1
+    path_ssd_drive = "C:/DatasetCatsDogs/"
     hp.preprocess_all_data(width, height)
-    X, Y, m, n = hp.create_X_and_y(width, height, train = True)
+    X, Y, m, n = hp.create_X_and_y(width, height, path_ssd_drive, train = True)
     w, b = hp.initialize_parameters(width * height * 3, output = 1) #Logistic regression: only one output layer now
     costs = []
     for i in range(num_iterations):

@@ -17,12 +17,12 @@ def preprocess_all_data(width, height):
                 resized_img = preprocessing(img_name, train_test, width, height)
                 cv2.imwrite('DataSetCatsDogs/' + train_test + '/preprocessed_' + train_test + '/' + img_name, resized_img)
 
-def create_X_and_y(width, height, train):
+def create_X_and_y(width, height, path_ssd_drive, train):
     if train:
         suffix = "train"
     else:
         suffix = "test1"
-    dir_list = sorted(os.listdir('DataSetCatsDogs/' + suffix + '/preprocessed_' + suffix), key=len)
+    dir_list = sorted(os.listdir(path_ssd_drive + suffix + '/preprocessed_' + suffix), key=len)
     X = np.zeros((width * height * 3, 2000))
     Y = np.zeros((1, 2000))
     m = len(dir_list)
@@ -34,7 +34,7 @@ def create_X_and_y(width, height, train):
         if img_num >= 12500:
             num = img_num - 12500
         img_name = dir_list[img_num]
-        img = cv2.imread('DataSetCatsDogs/' + suffix + '/preprocessed_' + suffix + '/' + img_name)
+        img = cv2.imread(path_ssd_drive + suffix + '/preprocessed_' + suffix + '/' + img_name)
         img = img.flatten() / 255
         #img = np.expand_dims(img, axis = 1)
         X[:, num] = img
