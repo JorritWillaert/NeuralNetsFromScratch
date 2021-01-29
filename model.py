@@ -29,8 +29,11 @@ def model():
         dw, db = bp.backward_propagation(m, A, X, Y)
         w, b = hp.update_parameters(w, b, dw, db, learning_rate)
     X_test, Y_test, m_test, n = hp.create_X_and_y(width, height, path_ssd_drive, suffix = "train", train = False)
-    accuracy = tst.test_accuracy(X_test, Y_test, m_test, w, b)
-    print("The accuracy of the test set equals {:0.2f} %".format(accuracy * 100))
+
+    accuracy_training = tst.test_accuracy(X, Y, m, w, b)
+    accuracy_test = tst.test_accuracy(X_test, Y_test, m_test, w, b)
+    print("The accuracy of the training set equals {:0.2f} %".format(accuracy_training * 100))
+    print("The accuracy of the test set equals {:0.2f} %".format(accuracy_test * 100))
 
 if __name__ == "__main__":
     model()
