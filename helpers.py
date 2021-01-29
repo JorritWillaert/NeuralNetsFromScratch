@@ -45,9 +45,9 @@ def create_X_and_y(width, height, path_ssd_drive, suffix, train):
         #img = np.expand_dims(img, axis = 1)
         X[:, num] = img
         if img_name[0:3] == "cat":
-            Y[0, num] = 1
+            Y[0][num] = 1
         else:
-            Y[0, num] = 0
+            Y[0][num] = 0
     return X, Y, m, n
 
 def initialize_parameters(input, output):
