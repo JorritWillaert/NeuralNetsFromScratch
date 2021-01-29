@@ -12,7 +12,7 @@ def model():
     width = 250
     height = 250
     num_iterations = 100
-    learning_rate = 0.1
+    learning_rate = 0.01
     path_ssd_drive = "C:/DatasetCatsDogs/"
     hp.preprocess_all_data(width, height)
     X, Y, m, n = hp.create_X_and_y(width, height, path_ssd_drive, suffix = "train", train = True)
@@ -26,7 +26,7 @@ def model():
         dw, db = bp.backward_propagation(m, A, X, Y)
         w, b = hp.update_parameters(w, b, dw, db, learning_rate)
     X_test, Y_test, m_test, n = hp.create_X_and_y(width, height, path_ssd_drive, suffix = "train", train = False)
-    
+
 
 if __name__ == "__main__":
     model()

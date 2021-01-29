@@ -20,16 +20,15 @@ def preprocess_all_data(width, height):
 def create_X_and_y(width, height, path_ssd_drive, suffix, train):
     if train:
         train_num = 999
-        size = 2000
+        m = 2000
         offset = 0
     else:
         test_num = 12400
-        size = 200
+        m = 200
         offset = 12400
     dir_list = sorted(os.listdir(path_ssd_drive + suffix + '/preprocessed_' + suffix), key=len)
-    X = np.zeros((width * height * 3, size))
-    Y = np.zeros((1, size))
-    m = len(dir_list)
+    X = np.zeros((width * height * 3, m))
+    Y = np.zeros((1, m))
     n = width * height * 3
     for img_num in range(len(dir_list)):
         num = img_num
