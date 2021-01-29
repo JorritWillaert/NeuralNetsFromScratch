@@ -17,22 +17,29 @@ def preprocess_all_data(width, height):
                 resized_img = preprocessing(img_name, train_test, width, height)
                 cv2.imwrite('DataSetCatsDogs/' + train_test + '/preprocessed_' + train_test + '/' + img_name, resized_img)
 
-def create_X_and_y(width, height, path_ssd_drive, train):
+def create_X_and_y(width, height, path_ssd_drive, suffix, train):
     if train:
-        suffix = "train"
+        train_num = 999
+        size = 2000
+        offset = 0
     else:
-        suffix = "test1"
+        test_num = 12400
+        size = 200
+        offset = 12400
     dir_list = sorted(os.listdir(path_ssd_drive + suffix + '/preprocessed_' + suffix), key=len)
-    X = np.zeros((width * height * 3, 2000))
-    Y = np.zeros((1, 2000))
+    X = np.zeros((width * height * 3, size))
+    Y = np.zeros((1, size))
     m = len(dir_list)
     n = width * height * 3
     for img_num in range(len(dir_list)):
         num = img_num
-        if (img_num % 12500 > 999): #Only use small set now
+        if train and (img_num % 12500 > 999): #Only use small test set now
+            continue
+        elif not train and (img_num % 12500 <= test_num):
             continue
         if img_num >= 12500:
             num = img_num - 12500
+        num -= offset
         img_name = dir_list[img_num]
         img = cv2.imread(path_ssd_drive + suffix + '/preprocessed_' + suffix + '/' + img_name)
         img = img.flatten() / 255

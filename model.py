@@ -5,6 +5,7 @@ import cv2
 import helpers as hp
 import forward_propagation as fp
 import backward_propagation as bp
+import testing as tst
 
 def model():
     """Define model"""
@@ -14,7 +15,7 @@ def model():
     learning_rate = 0.1
     path_ssd_drive = "C:/DatasetCatsDogs/"
     hp.preprocess_all_data(width, height)
-    X, Y, m, n = hp.create_X_and_y(width, height, path_ssd_drive, train = True)
+    X, Y, m, n = hp.create_X_and_y(width, height, path_ssd_drive, suffix = "train", train = True)
     w, b = hp.initialize_parameters(width * height * 3, output = 1) #Logistic regression: only one output layer now
     costs = []
     for i in range(num_iterations):
@@ -24,6 +25,8 @@ def model():
         costs.append(cost)
         dw, db = bp.backward_propagation(m, A, X, Y)
         w, b = hp.update_parameters(w, b, dw, db, learning_rate)
+    X_test, Y_test, m_test, n = hp.create_X_and_y(width, height, path_ssd_drive, suffix = "train", train = False)
+    
 
 if __name__ == "__main__":
     model()
