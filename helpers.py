@@ -11,14 +11,14 @@ def preprocessing(img_name, train_test, width, height):
 
 def preprocess_all_data(width, height):
     for train_test in ['train', 'test1']:
-        if len(os.listdir('DataSetCatsDogs/' + train_test + '/preprocessed_' + train_test)) == 0:
-            dir_list = sorted(os.listdir('DataSetCatsDogs/' + train_test + '/' + train_test), key=len)
+        if len(os.listdir('DatasetCatsDogs/' + train_test + '/preprocessed2_' + train_test)) == 0:
+            dir_list = sorted(os.listdir('DatasetCatsDogs/' + train_test + '/' + train_test), key=len)
             for img_num in range(len(dir_list)):
                 img_name = dir_list[img_num]
                 resized_img = preprocessing(img_name, train_test, width, height)
-                cv2.imwrite('DataSetCatsDogs/' + train_test + '/preprocessed_' + train_test + '/' + img_name, resized_img)
+                cv2.imwrite('DatasetCatsDogs/' + train_test + '/preprocessed2_' + train_test + '/' + img_name, resized_img)
 
-def create_X_and_y(width, height, path_ssd_drive, suffix, train):
+def create_X_and_y(width, height, suffix, train):
     if train:
         train_num = 999
         m = 2000
@@ -27,7 +27,7 @@ def create_X_and_y(width, height, path_ssd_drive, suffix, train):
         test_num = 12400
         m = 200
         offset = 12400
-    dir_list = os_sorted((os.listdir(path_ssd_drive + suffix + '/preprocessed_' + suffix)))
+    dir_list = os_sorted((os.listdir('DatasetCatsDogs/' + suffix + '/preprocessed2_' + suffix)))
     X = np.zeros((width * height * 3, m), dtype = float)
     Y = np.zeros((1, m), dtype = int)
     n = width * height * 3
@@ -40,7 +40,7 @@ def create_X_and_y(width, height, path_ssd_drive, suffix, train):
         if img_num >= 12500:
             num = (img_num - 12500) + m // 2
         num -= offset
-        img = cv2.imread(path_ssd_drive + suffix + '/preprocessed_' + suffix + '/' + img_name)
+        img = cv2.imread('DatasetCatsDogs/' + suffix + '/preprocessed2_' + suffix + '/' + img_name)
         img = img.flatten() / 255
         X[:, num] = img
         if img_name[0:3] == "cat":

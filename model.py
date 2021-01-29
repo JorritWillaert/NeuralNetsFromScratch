@@ -12,13 +12,12 @@ np.set_printoptions(threshold=sys.maxsize)
 
 def model():
     """Define model"""
-    width = 250
-    height = 250
-    num_iterations = 100
-    learning_rate = 0.0002
-    path_ssd_drive = "C:/DatasetCatsDogs/"
+    width = 64
+    height = 64
+    num_iterations = 250
+    learning_rate = 0.002
     hp.preprocess_all_data(width, height)
-    X, Y, m, n = hp.create_X_and_y(width, height, path_ssd_drive, suffix = "train", train = True)
+    X, Y, m, n = hp.create_X_and_y(width, height, suffix = "train", train = True)
     w, b = hp.initialize_parameters(width * height * 3, output = 1) #Logistic regression: only one output layer now
     costs = []
     for i in range(num_iterations):
@@ -28,7 +27,7 @@ def model():
         costs.append(cost)
         dw, db = bp.backward_propagation(m, A, X, Y)
         w, b = hp.update_parameters(w, b, dw, db, learning_rate)
-    X_test, Y_test, m_test, n = hp.create_X_and_y(width, height, path_ssd_drive, suffix = "train", train = False)
+    X_test, Y_test, m_test, n = hp.create_X_and_y(width, height, suffix = "train", train = False)
 
     accuracy_training = tst.test_accuracy(X, Y, m, w, b)
     accuracy_test = tst.test_accuracy(X_test, Y_test, m_test, w, b)
