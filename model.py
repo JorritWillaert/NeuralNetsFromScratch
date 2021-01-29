@@ -1,18 +1,21 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import cv2
+import sys
 
 import helpers as hp
 import forward_propagation as fp
 import backward_propagation as bp
 import testing as tst
 
+np.set_printoptions(threshold=sys.maxsize)
+
 def model():
     """Define model"""
     width = 250
     height = 250
     num_iterations = 100
-    learning_rate = 0.01
+    learning_rate = 0.0002
     path_ssd_drive = "C:/DatasetCatsDogs/"
     hp.preprocess_all_data(width, height)
     X, Y, m, n = hp.create_X_and_y(width, height, path_ssd_drive, suffix = "train", train = True)

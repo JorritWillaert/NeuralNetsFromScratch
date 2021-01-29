@@ -1,5 +1,6 @@
 import cv2
 import os
+from natsort import os_sorted
 import numpy as np
 
 def preprocessing(img_name, train_test, width, height):
@@ -26,28 +27,26 @@ def create_X_and_y(width, height, path_ssd_drive, suffix, train):
         test_num = 12400
         m = 200
         offset = 12400
-    dir_list = sorted(os.listdir(path_ssd_drive + suffix + '/preprocessed_' + suffix), key=len)
-    X = np.zeros((width * height * 3, m))
-    Y = np.zeros((1, m))
+    dir_list = os_sorted((os.listdir(path_ssd_drive + suffix + '/preprocessed_' + suffix)))
+    X = np.zeros((width * height * 3, m), dtype = float)
+    Y = np.zeros((1, m), dtype = int)
     n = width * height * 3
-    for img_num in range(len(dir_list)):
+    for img_num, img_name in enumerate(dir_list):
         num = img_num
         if train and (img_num % 12500 > 999): #Only use small test set now
             continue
-        elif not train and (img_num % 12500 <= test_num):
+        elif not train and (img_num % 12500 < test_num):
             continue
         if img_num >= 12500:
-            num = img_num - 12500
+            num = (img_num - 12500) + m // 2
         num -= offset
-        img_name = dir_list[img_num]
         img = cv2.imread(path_ssd_drive + suffix + '/preprocessed_' + suffix + '/' + img_name)
         img = img.flatten() / 255
-        #img = np.expand_dims(img, axis = 1)
         X[:, num] = img
         if img_name[0:3] == "cat":
-            Y[0][num] = 1
+            Y[0, num] = 1
         else:
-            Y[0][num] = 0
+            Y[0, num] = 0
     return X, Y, m, n
 
 def initialize_parameters(input, output):

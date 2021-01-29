@@ -1,8 +1,7 @@
 import numpy as np
-import sys
 
 import forward_propagation as fp
-np.set_printoptions(threshold=sys.maxsize)
+
 
 def test_accuracy(X_test, Y_test, m_test, w, b):
     A = fp.forward_propagation(w, b, X_test)
