@@ -19,23 +19,23 @@ def preprocess_all_data(width, height):
                 cv2.imwrite('DatasetCatsDogs/' + train_test + '/preprocessed2_' + train_test + '/' + img_name, resized_img)
 
 def create_X_and_y(width, height, suffix, train):
+    test_size = 1250
+    train_size = 12500 - test_size
     if train:
-        train_num = 999
-        m = 2000
+        m = train_size * 2
         offset = 0
     else:
-        test_num = 12400
-        m = 200
-        offset = 12400
+        m = test_size * 2
+        offset = 12500 - test_size
     dir_list = os_sorted((os.listdir('DatasetCatsDogs/' + suffix + '/preprocessed2_' + suffix)))
-    X = np.zeros((width * height * 3, m), dtype = float)
-    Y = np.zeros((1, m), dtype = int)
     n = width * height * 3
+    X = np.zeros((n, m), dtype = float)
+    Y = np.zeros((1, m), dtype = int)
     for img_num, img_name in enumerate(dir_list):
         num = img_num
-        if train and (img_num % 12500 > 999): #Only use small test set now
+        if train and (img_num % 12500 > train_size - 1):
             continue
-        elif not train and (img_num % 12500 < test_num):
+        elif not train and (img_num % 12500 < offset):
             continue
         if img_num >= 12500:
             num = (img_num - 12500) + m // 2
