@@ -33,6 +33,10 @@ def model():
     accuracy_test = tst.test_accuracy(X_test, Y_test, m_test, w, b)
     print("The accuracy of the training set equals {:0.2f} %".format(accuracy_training * 100))
     print("The accuracy of the test set equals {:0.2f} %".format(accuracy_test * 100))
+    plt.plot(costs)
+    plt.xlabel('# iterations')
+    plt.ylabel('Cost')
+    plt.show()
 
 if __name__ == "__main__":
     model()
