@@ -52,13 +52,16 @@ def create_X_and_y(width, height, suffix, train):
 def initialize_parameters(input, output):
     w = np.random.randn(input, output) * 0.01
     b = np.zeros((1, output))
+    print(w.shape, b.shape, "parameters")
     return w, b
 
 def calculate_cost(m, A, Y):
-    cost = -1 / m * (np.sum(Y * np.log(A) + (1 - Y) * np.log(1 - A)))
+    epsilon = 1e-5
+    cost = -1 / m * (np.sum(Y * np.log(A + epsilon) + (1 - Y) * np.log(1 - A + epsilon)))
+    print("Stop")
     return cost
 
 def update_parameters(w, b, dw, db, learning_rate):
-    dw = w - learning_rate * dw
-    db = b - learning_rate * db
-    return dw, db
+    w = w - learning_rate * dw
+    b = b - learning_rate * db
+    return w, b
