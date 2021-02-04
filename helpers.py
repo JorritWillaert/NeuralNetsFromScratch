@@ -59,6 +59,6 @@ def calculate_cost(m, A, Y):
     return cost
 
 def update_parameters(w, b, dw, db, learning_rate):
-    dw = w - learning_rate * dw
-    db = b - learning_rate * db
-    return dw, db
+    w = w - learning_rate * dw
+    b = b - learning_rate * db
+    return w, b
